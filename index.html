@@ -68,40 +68,41 @@
         background: #111;
         font-weight: 300;
       }
+
       .background {
         position: fixed;
-        width: 100%;
-        height: 100%;
+        width: 100% ;
+        height: 100% !important;
+          background-attachment: fixed;
+
         background-image: url('img/parallax-image.png');
+          background-repeat: no-repeat;
         background-size: cover;
         background-position: left;
+        background-color: transparent;
         text-rendering: optimizeLegibility;
+
+      }
+
+      /*.background {*/
+          /*background-size: cover;*/
+          /*background-image: url('img/parallax-image.png');*/
+          /*background-repeat: no-repeat;*/
+          /*background-attachment: fixed;*/
+          /*background-position: 0px, 0px, 50%, 0px;*/
+      /*}*/
+
+      .parallax-left {
+          /*background-position-x: left !important;*/
       }
       .background:after {
-        /* content: '';
+        content: '';
         position: fixed;
         top: 10px;
         right: 10px;
         bottom: 10px;
         left: 10px;
-        border: 0; */
-
-         /* Display and position the pseudo-element */
-          content: " ";
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-
-          /* Move the pseudo-element back away from the camera,
-          * then scale it back up to fill the viewport.
-          * Because the pseudo-element is further away, it appears to move more slowly, like in real life. */
-          transform: translateZ(-1px) scale(1.5);
-          /* Force the background image to fill the whole element. */
-          background-size: 100%;
-          /* Keep the image from overlapping sibling elements. */
-          z-index: -1;
+        border: 0;
       }
       .wrapper {
         display: none;
@@ -143,7 +144,8 @@
       /* 2. Explosion/Images/Links Structure and Text
       --------------------------------------- */
       .explosion,.explosion2,.explosion3,
-      .explosion4, .explosion5, .images {
+      .explosion4, .explosion5, .explosion6,
+      .images {
         position: fixed;
         top: 100%;
         width: 100%;
@@ -151,7 +153,8 @@
       }
       .explosion-byline,.explosion-byline2,
       .explosion-byline3,.explosion-byline4,
-      .explosion-byline5, .images-byline {
+      .explosion-byline5, .explosion-byline6,
+      .images-byline {
         position: fixed;
         top: 33%;
         left: 10%;
@@ -173,7 +176,7 @@
       --------------------------------------- */
       .domExplosionList, .domExplosionList2, 
       .domExplosionList3, .domExplosionList4,
-      .domExplosionList5 {
+      .domExplosionList5, .domExplosionList6{
         position: fixed;
         width: 400px;
         top: 100%;
@@ -261,8 +264,9 @@
       --------------------------------------- */
       #links {
         position: fixed;
-        top: 48%;
+        top: 10%;
         left: 10%;
+          right: 10%;
         width: 80%;
         color: #fff;
         text-align: center;
@@ -325,8 +329,75 @@
       }
 
       .w3-wide {letter-spacing: 8px;}
-      .w3-hover-opacity {cursor: pointer;} 
-</style>
+      .w3-hover-opacity {cursor: pointer;}
+
+      /* The Modal (background) */
+      .modal {
+          display: none;
+          position: center;
+          z-index: 1;
+          padding-top: 40px;
+          /*left: 0;*/
+          /*top: 0;*/
+          width: 100%;
+          height: 100%;
+          /*overflow: auto;*/
+          background-color: black;
+      }
+
+      /* Modal Content */
+      .modal-content {
+          position: relative;
+          background-color: #fefefe;
+          margin: auto;
+          padding: 0;
+          width: 50%;
+          height: 50%;
+          max-width: 1200px;
+      }
+
+      /* The Close Button */
+      .close {
+          color: white;
+          /*position: absolute;*/
+          /*top: 10px;*/
+          /*right: 25px;*/
+          font-size: 35px;
+          font-weight: bold;
+      }
+
+      /* Style inputs with type="text", select elements and textareas */
+      /*input[type=text], select, textarea {*/
+          /*width: 50%; !* Full width *!*/
+          /*padding: 12px; !* Some padding *!*/
+          /*border: 1px solid #ccc; !* Gray border *!*/
+          /*box-sizing: border-box; !* Make sure that padding and width stays in place *!*/
+          /*margin-top: 6px; !* Add a top margin *!*/
+          /*margin-bottom: 16px; !* Bottom margin *!*/
+          /*resize: vertical !* Allow the user to vertically resize the textarea (not horizontally) *!*/
+      /*}*/
+
+      /* Style the submit button with a specific background color etc */
+      input[type=submit] {
+          background-color: #4CAF50;
+          color: white;
+          padding: 12px 20px;
+          border: none;
+          cursor: pointer;
+      }
+
+      /* When moving the mouse over the submit button, add a darker green color */
+      input[type=submit]:hover {
+          background-color: #45a049;
+      }
+
+      form {
+          background-color: black;
+      }
+
+
+
+  </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
@@ -343,10 +414,52 @@
               <a class="w3-bar-item w3-button w3-white w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
                 <i class="fa fa-bars"></i>
               </a>
-              <a href="#contact" class="w3-bar-item w3-button w3-hide-small w3-wide"> CONTACT </a>
+              <a href="#contact" class="w3-bar-item w3-button w3-hide-small w3-wide" onclick="openModal()"> CONTACT </a>
               <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small w3-wide"> PORTFOLIO </a>
             </div>
-          
+
+
+            <!-- The Modal/Lightbox -->
+            <div id="myModal" class="modal">
+                <span class="close cursor w3-display-topright" onclick="closeModal()">&times;</span>
+
+                <div class="modal-content">
+                    <form id="contactForm" class="w3-container w3-black" method="post" enctype="text/plain">
+
+                        <label>First Name</label>
+                        <input class="w3-input w3-border-0" type="text">
+
+                        <label>Last Name</label>
+                        <input class="w3-input w3-border-0" type="text">
+
+                        <label>Email</label>
+                        <input class="w3-input w3-border-0" type="text">
+
+                        <label>Subject</label>
+                        <input class="w3-input w3-border-0" type="text"><br>
+
+                        <label>Message</label>
+                        <textarea class="w3-input w3-border-0" id="message" name="subject" placeholder="Write something.." style="height:150px"></textarea><br><br>
+                        <input type="submit" value="Send">
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- The video modal -->
+            <div id="videomodal" class="modal">
+                <span class="close cursor w3-display-topright" onclick="closeVideo()">&times;</span>
+
+                <div class="modal-content">
+                    <video width="100% " height="100%" controls="controls" poster="image" preload="true" autoplay loop>
+                        <source src="video/Carolyn.mp4" type="video/mp4">
+                        <source src="video/Carolyn.ogg" type="video/ogg">
+                        Your browser does not support the video playback.
+                    </video>
+
+                </div>
+            </div>
+
             <!-- Navbar on small screens -->
             <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
               <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
@@ -357,7 +470,7 @@
         <!-- Start of document -->
         <div class="container w3-row w3-container">
           <div class="container-inner">
-            <div class="background"></div>
+            <div class="background parallax-left w3-left"></div>
 
             <!-- Landing Page -->
             <section id="intro">
@@ -371,10 +484,12 @@
                   
                   <!-- Action Buttons -->
                   <div class="byline">
-                        <span class="w3-button w3-left">> ENTER SITE</span>
-                        <span class="w3-button w3-center ">> WATCH VIDEO</span>
+                        <span class="w3-button w3-left" onclick="pageScroll()">> ENTER SITE</span>
+                        <span class="w3-button w3-center " onclick="videoModal()">> WATCH VIDEO</span>
                   </div>
-                </div>  
+
+                </div>
+
             </section>
 
             <!-- Sections 1 -->
@@ -436,28 +551,28 @@
                 </div>
                 
             </section>
-            
-            <!-- <section id="images" class="wrapper">
-              <p class="images-byline">Or better yet, a realistic example of showcasing some design work.</p>
-              <p class="images-byline-2">Really, anything is possible &hellip;</p>
-              <img id="mediumHomepage" class="raw-page" src="https://goo.gl/xRsl79">
-              <div class="iphone">
-                <img class="iphone-frame" src="https://goo.gl/1rjtLX">
-                <div class="iphone-viewport">
-                  <img id="medium-profile-iphone" class="iphone-content" src="https://goo.gl/jFK9oy">
-                  <img id="davegamache-dot-com" class="iphone-content" src="https://goo.gl/nkqE1t">
-                </div>
-              </div>
-            </section> -->
 
-            <!-- <section id="links">
-              <p class="links-byline">Learn how to make your parallax site smooth like this one.</p>
-              <a class="btn" href="#">Read about it on Medium</a>
-            </section> -->
+
+              <!-- Section 6 -->
+              <section class="explosion6 wrapper">
+                  <div class="explosion-byline6">
+                      <img src="img/ladyncars.png" height="600px" width="800px"><br><br>
+                      <!--<img src="img/victoria.png" height="400px" width="600px">-->
+                  </div>
+                  <div class="domExplosionList6">
+                      <img src="img/victoria2.png" height="700px" width="600px"alt="">
+                  </div>
+
+              </section>
+
+              <section id="links">
+                  <img class = "links-byline" src="img/couplencar.png" height="600x" width="1000px" alt=""><br>
+              <!--<p class="links-byline">Learn how to make your parallax site smooth like this one.</p>-->
+              <p class="btn" onclick="smoothscroll()">Return to Top</p>
+            </section>
 
           </div>
         </div>
-        <h3 class="error">Whoops! Right now this demo doesn't handle resizing or browsers less than 1000px wide. Reload this page or get on a laptop!</h3>
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
         <script  src="js/index.js"></script>

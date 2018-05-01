@@ -104,7 +104,21 @@
                 'opacity'     : [0, 1] // hack to accelrate opacity speed
               }
             ]
-          } ,
+          } ,{
+                'wrapper' : '.explosion6', //this is a hack for section 2
+                'duration' : '150%',
+                'animations' :  [
+                    {
+                        'selector'    : '.explosion-byline6',
+                        'translateY'  : '-25%',//'-25%',
+                        'opacity'     : [0, 1.75] // hack to accelrate opacity speed
+                    } , {
+                        'selector'    : '.domExplosionList6',
+                        'translateY'  : '-85%',//'-70%',
+                        'opacity'     : [0, 1] // hack to accelrate opacity speed
+                    }
+                ]
+            } ,
           ///////////////////////////////////////////////
           
           // {
@@ -297,20 +311,21 @@
           //       'scale'       : [1, 1]
           //     }
           //   ]
-          // } , {
-          //   'wrapper' : '#links',
-          //   'duration' : '100%',
-          //   'animations' :  [
-          //     {
-          //       'selector'    : '#links',
-          //       'opacity'     : [0, 2],
-          //       'scale'       : [.8, 1]
-          //     } , {
-          //       'selector'    : '.twitter',
-          //       'opacity'     : [0, 1]
-          //     }
-          //   ]
-          // } , 
+          // },
+             {
+            'wrapper' : '#links',
+            'duration' : '100%',
+            'animations' :  [
+              {
+                'selector'    : '#links',
+                'opacity'     : [0, 2],
+                'scale'       : [.8, 1]
+              } , {
+                'selector'    : '.twitter',
+                'opacity'     : [0, 1]
+              }
+            ]
+          } ,
           {
             'duration' : '100%',
             'animations' :  []
@@ -530,12 +545,43 @@ function toggleFunction() {
     }
 }
 
-function noscroll() {
-  window.scrollTo( 0, 0 );
+//Auto scroll functions
+function pageScroll() {
+    window.scrollBy(0,1);
+    scrolldelay = setTimeout(pageScroll,15);
+    //------------------------------------------------
 }
 
-// add listener to disable scroll
-window.addEventListener('body', noscroll);
+//Contact us Modal Form
+// Open the Modal
+function openModal() {
+    document.getElementById('myModal').style.display = "block";
+}
 
-// Remove listener to disable scroll
-window.removeEventListener('body', noscroll);
+function videoModal() {
+    document.getElementById('videomodal').style.display = "block";
+}
+// Close the Modal
+function closeModal() {
+    document.getElementById('myModal').style.display = "none";
+}
+
+function closeVideo() {
+    document.getElementById('videomodal').style.display = "none";
+}
+
+
+//Return to Landing page
+function smoothscroll(){
+    var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    if (currentScroll > 0) {
+        window.requestAnimationFrame(smoothscroll);
+        window.scrollTo (0,currentScroll - (currentScroll/5));
+    }
+}
+
+function submitContact() {
+
+    document.getElementById("contactForm").submit()
+
+}
